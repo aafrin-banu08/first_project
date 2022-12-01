@@ -14,16 +14,23 @@ class form extends StatefulWidget {
 class _formState extends State<form> {
   final _formKey = GlobalKey<FormBuilderState>();
   List gender = ["Male", "Female", "Others"];
+
   String? username;
   String? password;
   String? genderselected;
+  String? DateTime;
+  String? Slider;
+  String? Email;
+  String? Phone;
+  String? RadioButton;
+  String? Segments;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
-        title: Text("Login"),
+        title: Text("Details"),
       ),
       body: Container(
         margin: EdgeInsets.all(20),
@@ -92,6 +99,119 @@ class _formState extends State<form> {
                   //       errorText: "this field is required"),
                   //   ]),
                 ),
+                FormBuilderDateTimePicker(
+                  name: "DateTime",
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(
+                        errorText: "this field is required"),
+                  ]),
+                  decoration: InputDecoration(
+                      hintText: "select date", labelText: "Date&Time"),
+                  onChanged: (newValue) {
+                    setState(() {
+                      DateTime = newValue.toString();
+                    });
+                  },
+                ),
+                FormBuilderSlider(
+                  name: "Slider",
+                  initialValue: 5,
+                  min: 0,
+                  max: 10,
+                  decoration: InputDecoration(
+                    labelText: "Range",
+                  ),
+                ),
+                FormBuilderTextField(
+                  name: "Email",
+                  keyboardType: TextInputType.emailAddress,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(
+                        errorText: "this field is required"),
+                    FormBuilderValidators.email(),
+                  ]),
+                  decoration: InputDecoration(
+                      hintText: "Type your email address", labelText: "E-mail"),
+                  onChanged: (newValue) {
+                    setState(() {
+                      Email = newValue.toString();
+                    });
+                  },
+                ),
+                FormBuilderTextField(
+                  name: "Phone",
+                  keyboardType: TextInputType.number,
+                  maxLength: 10,
+                  validator: FormBuilderValidators.numeric(),
+                  decoration: InputDecoration(
+                      hintText: "Enter your number", labelText: "Phone"),
+                  onChanged: (newValue) {
+                    Phone = newValue.toString();
+                    setState(() {});
+                  },
+                ),
+                FormBuilderRadioGroup(
+                  name: "Radio Button",
+                  options: ["Yes", "No"]
+                      .map((e) => FormBuilderFieldOption(
+                            value: e,
+                            child: Text(e),
+                          ))
+                      .toList(),
+                  decoration: InputDecoration(labelText: "Do you like this"),
+                  controlAffinity: ControlAffinity.leading,
+                ),
+                FormBuilderCheckboxGroup(
+                  name: "CheckBoxGroup",
+                  options: ["1", "2", "3", "4", "5"]
+                      .map((e) => FormBuilderChipOption(
+                            value: e,
+                            child: Text(e),
+                          ))
+                      .toList(),
+                  decoration: InputDecoration(labelText: "Ratings"),
+                ),
+                FormBuilderSegmentedControl(
+                  name: "Segments",
+                  options: ["1", "2", "3"]
+                      .map((e) => FormBuilderFieldOption(
+                            value: e,
+                            child: Text(e),
+                          ))
+                      .toList(),
+                  decoration: InputDecoration(labelText: "Select"),
+                ),
+                // FormBuilderFilterChip(
+                //   name: "Filterchip",
+                //   options: ["good", "ok", "better"]
+                //       .map((e) => FormBuilderChipOption(
+                //             value: e,
+                //             child: Text(e),
+                //           ))
+                //       .toList(),
+                //   decoration: InputDecoration(labelText: "Comment"),
+                // ),
+                FormBuilderCheckbox(
+                  name: "Checkbox",
+                  title: Row(
+                    children: [
+                      Text(
+                        "Terms and Conditions",
+                      ),
+                      Text("Agree", style: TextStyle(color: Colors.red)),
+                    ],
+                  ),
+                ),
+                FormBuilderChoiceChip(
+                  name: "ChoiceChip",
+                  options: ["good", "ok", "better"]
+                      .map((e) => FormBuilderChipOption(
+                            value: e,
+                            child: Text(e),
+                          ))
+                      .toList(),
+                  decoration: InputDecoration(labelText: "Comment"),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -115,7 +235,7 @@ class _formState extends State<form> {
                                   )));
                     }
                   }),
-                  child: Text("Login"),
+                  child: Text("Submit"),
                 ),
               ],
             ),
